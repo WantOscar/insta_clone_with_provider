@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/src/ui/app/app_view_model.dart';
+import 'package:insta_clone/src/ui/widget/image_avatar.dart';
 import 'package:insta_clone/src/ui/widget/image_data.dart';
 import 'package:provider/provider.dart';
 
@@ -8,9 +9,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _body(),
-      bottomNavigationBar: _bottomNav(),
+    final _viewModel = Provider.of<AppViewModel>(context);
+
+    return PopScope(
+      canPop: _viewModel.canPop,
+      onPopInvoked: _viewModel.back,
+      child: Scaffold(
+        body: _body(),
+        bottomNavigationBar: _bottomNav(),
+      ),
     );
   }
 
@@ -51,9 +58,18 @@ class App extends StatelessWidget {
                   activeIcon: ImageData(path: ImagePath.reelsOn),
                   label: ""),
               const BottomNavigationBarItem(
-                  icon: SizedBox(width: 30, height: 30, child: CircleAvatar()),
-                  activeIcon:
-                      SizedBox(width: 30, height: 30, child: CircleAvatar()),
+                  icon: ImageAvatar(
+                    path:
+                        "https://cdnweb01.wikitree.co.kr/webdata/editor/202405/08/img_20240508134045_5a98bd30.webp",
+                    size: 28,
+                    type: ImageAvatarType.OFF,
+                  ),
+                  activeIcon: ImageAvatar(
+                    path:
+                        "https://cdnweb01.wikitree.co.kr/webdata/editor/202405/08/img_20240508134045_5a98bd30.webp",
+                    size: 28,
+                    type: ImageAvatarType.ON,
+                  ),
                   label: ""),
             ],
           );
