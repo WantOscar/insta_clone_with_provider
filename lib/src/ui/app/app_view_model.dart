@@ -1,14 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 enum Page { HOME, SEARCH, UPLOAD, REELS, MYPAGE }
 
 class AppViewModel extends ChangeNotifier {
+  final GlobalKey<NavigatorState> _key = GlobalKey<NavigatorState>();
+
   int _pageIndex = 0;
   bool _canPop = false;
-  List<int> _history = [0];
+  final List<int> _history = [0];
 
   int get pageIndex => _pageIndex;
   bool get canPop => _canPop;
+  GlobalKey<NavigatorState> get key => _key;
 
   void changePage(int value) {
     final page = Page.values[value];

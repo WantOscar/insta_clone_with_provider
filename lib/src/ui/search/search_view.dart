@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:insta_clone/src/ui/search/search_focus_view.dart';
+import 'package:insta_clone/src/utils/animation_route.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -29,8 +30,8 @@ class _SearchViewState extends State<SearchView> {
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const SearchFocusView())),
+            onTap: () => Navigator.of(context)
+                .push(AnimationRoute(const SearchFocusView())),
             child: Container(
                 height: 50,
                 alignment: Alignment.centerLeft,
@@ -48,7 +49,7 @@ class _SearchViewState extends State<SearchView> {
                       ),
                       Text(
                         "검색",
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: Colors.grey, fontSize: 18),
                       )
                     ],
                   ),
