@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/src/ui/app/app_view_model.dart';
 import 'package:insta_clone/src/ui/home/home_view.dart';
+import 'package:insta_clone/src/ui/search/search_view.dart';
 import 'package:insta_clone/src/widget/image_avatar.dart';
 import 'package:insta_clone/src/widget/image_data.dart';
 import 'package:provider/provider.dart';
@@ -10,11 +11,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _viewModel = Provider.of<AppViewModel>(context);
-
+    final viewModel = Provider.of<AppViewModel>(context);
     return PopScope(
-      canPop: _viewModel.canPop,
-      onPopInvoked: _viewModel.back,
+      canPop: viewModel.canPop,
+      onPopInvoked: viewModel.back,
       child: Scaffold(
         body: _body(),
         bottomNavigationBar: _bottomNav(),
@@ -22,24 +22,28 @@ class App extends StatelessWidget {
     );
   }
 
-  Widget _body() => Consumer<AppViewModel>(
-        builder: (context, provider, child) {
-          return IndexedStack(
-            index: provider.pageIndex,
-            children: [
-              const HomeView(),
-              Container(color: Colors.blue),
-              Container(color: Colors.yellow),
-              Container(color: Colors.green),
-              Container(color: Colors.black),
-            ],
-          );
-        },
-      );
+  Widget _body() => Consumer<AppViewModel>(builder: (context, provider, child) {
+        return IndexedStack(
+          index: provider.pageIndex,
+          children: [
+            const HomeView(),
+            const SearchView(),
+            Container(
+              color: Colors.yellow,
+            ),
+            Container(
+              color: Colors.green,
+            ),
+            Container(
+              color: Colors.black,
+            ),
+          ],
+        );
+      });
 
-  Widget _bottomNav() => Consumer<AppViewModel>(
-        builder: (context, provider, child) {
-          return BottomNavigationBar(
+  Widget _bottomNav() =>
+      Consumer<AppViewModel>(builder: (context, provider, child) {
+        return BottomNavigationBar(
             currentIndex: provider.pageIndex,
             onTap: provider.changePage,
             type: BottomNavigationBarType.fixed,
@@ -60,20 +64,17 @@ class App extends StatelessWidget {
                   label: ""),
               const BottomNavigationBarItem(
                   icon: ImageAvatar(
-                    path:
-                        "https://cdnweb01.wikitree.co.kr/webdata/editor/202405/08/img_20240508134045_5a98bd30.webp",
-                    size: 28,
-                    type: ImageAvatarType.OFF,
-                  ),
+                      type: ImageAvatarType.OFF,
+                      path:
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnnnObTCNg1QJoEd9Krwl3kSUnPYTZrxb5Ig&s",
+                      size: 28),
                   activeIcon: ImageAvatar(
-                    path:
-                        "https://cdnweb01.wikitree.co.kr/webdata/editor/202405/08/img_20240508134045_5a98bd30.webp",
-                    size: 28,
                     type: ImageAvatarType.ON,
+                    path:
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnnnObTCNg1QJoEd9Krwl3kSUnPYTZrxb5Ig&s",
+                    size: 28,
                   ),
                   label: ""),
-            ],
-          );
-        },
-      );
+            ]);
+      });
 }
