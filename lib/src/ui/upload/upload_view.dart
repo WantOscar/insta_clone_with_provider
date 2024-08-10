@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clone/src/ui/upload/upload_view_model.dart';
 import 'package:insta_clone/src/widget/image_data.dart';
+import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:test/expect.dart';
 
 class UploadView extends StatefulWidget {
   const UploadView({super.key});
@@ -107,17 +111,25 @@ class _UploadViewState extends State<UploadView> {
         ],
       );
 
-  Widget _images() => Expanded(
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            mainAxisSpacing: 1.0,
-            crossAxisSpacing: 1.0,
-          ),
-          itemCount: 50,
-          itemBuilder: (context, index) => Container(
-            color: Colors.blue,
-          ),
-        ),
-      );
+  Widget _images() =>
+      Consumer<UploadViewModel>(builder: (context, provider, child) {
+        return (provider.ablums.isNotEmpty)
+            ? Expanded(
+                child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 1.0,
+                      crossAxisSpacing: 1.0,
+                    ),
+                    itemCount: provider.currentAlbum.images.length,
+                    itemBuilder: (context, index) {
+                      final image = provider.currentAlbum.images[index];
+                      return AssetEntityImage(
+                        image,
+                        fit: BoxFit.cover,
+                      );
+                    }))
+            : Container();
+      });
 }

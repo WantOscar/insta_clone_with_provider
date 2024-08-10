@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:insta_clone/src/ui/upload/upload_view.dart';
+import 'package:insta_clone/src/ui/upload/upload_page.dart';
 import 'package:insta_clone/src/utils/global_variable.dart';
 
 enum Page { HOME, SEARCH, UPLOAD, REELS, MYPAGE }
@@ -59,7 +59,7 @@ void moveToUpload() {
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const UploadView(),
+            const UploadPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(-1.0, 0.0);
           const end = Offset.zero;
